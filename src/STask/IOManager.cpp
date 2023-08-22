@@ -5,26 +5,19 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <format>
 
 namespace Sisyphus
 {
 
-IOManager* IOManager::inst()
+
+std::pair<Task*, Error> IOManager::readUserTasks(const User& user)
 {
-    static IOManager* mgr = new IOManager();
+    const auto& [path, err] = getOrCreateUser(user);
 
-    return mgr;
-}
-
-std::pair<Task*, Error> IOManager::readUserTasks(const User& user) const
-{
-    std::pair<std::string, Error> pathErrPair = getOrCreateUser(user);
-
-    if (pathErrPair.second.hasError)
-        return std::make_pair(nullptr, Error(pathErrPair.second));
+    if (err.hasError)
+        return std::make_pair(nullptr, err);
     
-    std::string path(pathErrPair.first);
-
     std::ifstream tasks;
     tasks.open(path, std::ios::in);
     
@@ -85,7 +78,7 @@ std::optional<Error> IOManager::writeTask(Task& task, const User& user) const
     return std::optional<Error>();
 }
 
-std::pair<std::string, Error> IOManager::getOrCreateUser(const User& user) const
+std::pair<std::string, Error> IOManager::getOrCreateUser(const User& user)
 {
     std::string path(getUserPath(user));
 
@@ -96,21 +89,21 @@ std::pair<std::string, Error> IOManager::getOrCreateUser(const User& user) const
             return std::pair<std::string, Error>("", err.value());
     }
 
-    return std::pair<std::string, Error>(path, Error());;
+    return std::make_pair(path, Error());
 }
 
 std::string IOManager::getUserPath(const User& user) const
 {
-    return std::string("users/" + user.system + "/" + std::to_string(user.id));
+    return std::format("users/%s/%s", user.system, std::to_string(user.id));
 }
 
 bool IOManager::checkFileExistance(const std::string& userPath) const
 {
-    std::filesystem::path userPath{ userPath };
-    return std::filesystem::exists(userPath);
+    std::filesystem::path path{ userPath };
+    return std::filesystem::exists(path);
 }
 
-std::optional<Error> IOManager::createUser(const std::string& userPath) const
+std::optional<Error> IOManager::createUser(const std::string& userPath)
 {
     std::ofstream user;
     user.open(userPath, std::ios::out);

@@ -7,48 +7,62 @@
 
 namespace Sisyphus
 {
+
 struct User;
 struct Task;
 struct TaskTable;
 struct Error;
 
-#ifdef NEEDS_INTERFACE
-// 255 translation units should be enough
-typedef uint8_t TTI ; // text translation index
-
-struct Translation
-{
-	explicit Translation(std::string filename);
-	inline std::string getText(const TTI index) { return wordMap[index]; }
-private:
-	std::unordered_map<TTI, std::string> wordMap;
-};
-#endif
-
+// struct contains error data
 struct Error
 {
 	Error() : text(std::string("")), hasError(false) {};
-	Error(std::string inText) : text(inText), hasError(true) {};
+	explicit Error(const std::string& inText) : text(inText), hasError(true) {};
 	std::string text;
 	bool hasError;
 };
 
+// 2-way linked list, contains task header data
 struct Task
 {
-	std::string name, description, creationDate, deadlineDate, endDate;
+	std::string name;
+	std::string description;
+	std::string creationDate;
+	std::string deadlineDate;
+	std::string endDate;
+
 	Task* next;
 	Task* prev;
 	Task* last;
 };
 
-struct TaskTable
-{
-	Task* currentTask;
-};
-
+// struct stores user info
 struct User
 {
-	std::string login, password, system;
+	User() = default;
+	User(User&& other) = default;
+	// Copy operation is prohibited due to usage of pointers to tasks
+	User& operator=(const User& other) = delete; 
+	User(const User& other) = delete;
+
+	// deleting all tasks
+	~User() // this is actually needed
+	{ 
+		Task* curr;
+		while (tasks->next)
+		{
+			curr = tasks;
+			tasks = tasks->next;
+			delete curr;
+		}
+
+		if (tasks) delete tasks;
+			
+	}
+
+	std::string login;
+	std::string password;
+	std::string system;
 
 	Error lastErr;
 	Task* tasks;
