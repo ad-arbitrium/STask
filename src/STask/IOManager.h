@@ -9,37 +9,38 @@
 namespace Sisyphus
 { 
 
+const std::string s_sep = std::string("=#=");
+
 // IOManager is NOT part of API
 class IOManager
 {
 public:
-
-	static IOManager* inst()
-	{
-		static IOManager* mgr = new IOManager; // this is not worthy of an inline static
-
-		return mgr;
-	}
 	// creates linked-list of user tasks from file
-	std::pair<Task*, Error> readUserTasks(const User& path);
+	static std::pair<Task*, Error> readUserTasks(const User* path);
 	
 	// writes a new task to user file
-	std::optional<Error> writeTask(Task& task, const User& user) const;
-	
-	// creates a new user file (if it doesnt exist) & returns path to a file
-	std::pair<std::string, Error> getOrCreateUser(const User& user);
+	static std::optional<Error> writeTask(Task& task, const User& user);
+
+	// reads user file from disk, constructs user & returns it
+	// Error if user doesn't exist
+	static std::pair<User*, Error> getUser(const std::string& username, const std::string& password);
+
+	// creates a new user file, returns new user
+	// error if user already exists
+	static std::pair<User*, Error> createUser(const std::string& username, const std::string& password = "");
 	
 private:
-	const std::string s_sep = "=#=";
-
-	IOManager() = default;
+	IOManager() = delete;
 	IOManager(const IOManager& other) = delete;
 	IOManager(IOManager&& other) = delete;
 
-	inline std::string getUserPath(const User& user) const;
+	static inline std::string getUserPath(const std::string& user);
+	static inline std::string getUserPath(const User& user);
+	static inline std::string getUserPath(const User* user);
 	
-	inline bool checkFileExistance(const std::string& userPath) const;
-	std::optional<Error> createUser(const std::string& userPath);
+	static inline bool checkFileExistance(const std::string& userPath);
+	static inline std::optional<Error> ensureUserFileExistance();
+	static std::optional<Error> createUserFile(const std::string& userPath);
 
 }; // IOManager
 

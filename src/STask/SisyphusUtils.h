@@ -13,6 +13,9 @@ struct Task;
 struct TaskTable;
 struct Error;
 
+const std::string DATA_PATH = "data";
+const std::string USERS_PATH = "users";
+
 // struct contains error data
 struct Error
 {
@@ -25,6 +28,10 @@ struct Error
 // 2-way linked list, contains task header data
 struct Task
 {
+	Task() {};
+	Task(std::string name_, std::string _descr, std::string _crDate, std::string _deadLn)
+		: name(name_), description(_descr), creationDate(_crDate), deadlineDate(_deadLn) {};
+
 	std::string name;
 	std::string description;
 	std::string creationDate;
@@ -60,12 +67,13 @@ struct User
 			
 	}
 
-	std::string login;
-	std::string password;
-	std::string system;
+	std::string login = "";
+	std::string password = "";
+	// i guess this should be deleted?
+	std::string system = "";
 
 	Error lastErr;
-	Task* tasks;
+	Task* tasks = nullptr;
 	uint32_t id;
 
 	bool connected;
