@@ -1,5 +1,5 @@
 #include "IOManager.h"
-#include "SisyphusUtils.h"
+#include "STUtils.h"
 
 #include <optional>
 #include <string>
@@ -8,7 +8,7 @@
 #include <format>
 #include <sstream>
 
-namespace Sisyphus
+namespace STask
 {
 
 std::pair<Task*, Error> IOManager::readUserTasks(const User* user)

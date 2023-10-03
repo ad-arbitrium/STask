@@ -1,11 +1,11 @@
-#ifndef __SISYPHUS_UTILS_H__
-#define __SISYPHUS_UTILS_H__
+#ifndef __STask_UTILS_H__
+#define __STask_UTILS_H__
 
 #include <string>
 #include <unordered_map>
 #include <cstdint>
 
-namespace Sisyphus
+namespace STask
 {
 
 struct User;

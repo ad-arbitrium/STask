@@ -1,7 +1,7 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
-namespace Sisyphus
+namespace STask
 { 
 
 class Logger

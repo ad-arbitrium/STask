@@ -1,10 +1,10 @@
 #include "UserManager.h"
-#include "SisyphusUtils.h"
+#include "STUtils.h"
 #include "IOManager.h"
 
 #include <unordered_map>
 
-namespace Sisyphus
+namespace STask
 {
 uint32_t UserManager::getUserHash(const User* user) const
 {

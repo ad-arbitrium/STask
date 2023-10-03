@@ -1,14 +1,14 @@
 #ifndef __USER_MANAGER_H__
 #define __USER_MANAGER_H__
 
-#include "SisyphusUtils.h"
+#include "STUtils.h"
 
 #include <optional>
 #include <cstdint>
 #include <string>
 #include <unordered_map>
 
-namespace Sisyphus
+namespace STask
 {
 
 class IOManager;
