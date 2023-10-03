@@ -7,3 +7,7 @@ src/STask/data/
 src/STask/users/
 
 src/STask/build/
+
+CMakeFiles
+cmake_install.cmake
+CMakeCache.txt
