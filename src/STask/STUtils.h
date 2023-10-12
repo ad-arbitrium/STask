@@ -49,8 +49,8 @@ struct User
 	User() = default;
 	User(User&& other) = default;
 	// Copy operation is prohibited due to usage of pointers to tasks
-	User& operator=(const User& other) = delete; 
-	User(const User& other) = delete;
+	User& operator=(const User& other) {}; 
+	User(const User& other) {};
 
 	// deleting all tasks
 	~User() // this is actually needed
