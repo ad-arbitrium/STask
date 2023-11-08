@@ -8,8 +8,14 @@ src/STask/users/
 
 src/STask/build/
 
-CMakeFiles
-cmake_install.cmake
-CMakeCache.txt
+/data
+/users
 
+STaskTest
+
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+*.a
 *.so
+Makefile

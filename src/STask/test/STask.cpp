@@ -1,8 +1,8 @@
 
 #include <iostream>
-#include "UserManager.h"
+#include "../UserManager.h"
 
-#define SISSY Sisyphus::UserManager::inst()
+#define SISSY STask::UserManager::inst()
 
 int main(int argc, char** argv)
 {
@@ -31,8 +31,8 @@ int main(int argc, char** argv)
 	std::cout << "logged in\n";
 	
 	// memory leak potential, move semantics should be implemented
-	Sisyphus::Task* tsk 
-		= new Sisyphus::Task("Finish stas", "it's time", "17/8/23", "18/8/23");
+	STask::Task* tsk 
+		= new STask::Task("Finish stas", "it's time", "17/8/23", "18/8/23");
 
 	if (const auto& writeErr = SISSY->writeTask(*tsk, *usr);
 		writeErr != std::nullopt)
@@ -44,7 +44,7 @@ int main(int argc, char** argv)
 
 	std::cout << "wrote tasks\n";
 
-	std::pair<Sisyphus::Task*, Sisyphus::Error> res 
+	std::pair<STask::Task*, STask::Error> res 
 		= SISSY->getUserTasks(usr);
 
 	//auto& [tasks, readErr] = SISSY->getUserTasks(usr);
@@ -58,10 +58,11 @@ int main(int argc, char** argv)
 
 	std::cout << "tasks read\n";
 
-	Sisyphus::Task* tsk2 = res.first;
+	STask::Task* tsk2 = res.first;
 	while (tsk2)
 	{
-		std::cout << tsk2->name;
+		
+		std::cout << tsk2->name << ' ' << tsk2 << '\n';
 		tsk2 = tsk2->next;
 	}
 
