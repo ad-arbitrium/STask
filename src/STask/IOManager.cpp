@@ -94,7 +94,7 @@ std::pair<User*, Error> IOManager::createUser(const std::string& username, const
     // we ensure that the file, which lists all users actually exists
     ensureUserFileExistance();
     
-    std::filesystem::create_directory(".\\" + USERS_PATH);
+    std::filesystem::create_directory("./" + USERS_PATH);
 
     // todo add user to usersfile
     std::string path(getUserPath(username));
@@ -121,7 +121,7 @@ std::pair<User*, Error> IOManager::createUser(const std::string& username, const
 // wtf is this...
 std::string IOManager::getUserPath(const std::string& user)
 {
-    return std::format("users\\{}", user);
+    return std::format("users/{}", user);
 }
 
 inline std::string IOManager::getUserPath(const User* user)
@@ -136,16 +136,16 @@ inline std::string IOManager::getUserPath(const User& user)
 
 bool IOManager::checkFileExistance(const std::string& userPath)
 {
-    std::filesystem::path path{ ".\\" + userPath};
+    std::filesystem::path path{ "./" + userPath};
     return std::filesystem::exists(path);
 }
 
 inline std::optional<Error> IOManager::ensureUserFileExistance()
 {
     // crutch, whatever
-    std::filesystem::create_directory(".\\" + DATA_PATH);
+    std::filesystem::create_directory("./" + DATA_PATH);
 
-    std::string path = ".\\" + DATA_PATH + "\\users";
+    std::string path = "./" + DATA_PATH + "/users";
 
     // funny c++17 construct
     if (std::filesystem::path fsPath{path}; 
@@ -165,7 +165,7 @@ inline std::optional<Error> IOManager::ensureUserFileExistance()
 
 std::pair<User*, Error> IOManager::getUser(const std::string& user, const std::string& password)
 {
-    std::ifstream userFile(".\\" + DATA_PATH + "\\" + "users");
+    std::ifstream userFile("./" + DATA_PATH + "/" + "users");
 
     if (!userFile.is_open())
         return std::make_pair(nullptr, Error("Unable to read users file"));
@@ -205,7 +205,7 @@ std::optional<Error> IOManager::createUserFile(const std::string& userPath)
     user.close();
 
     std::ofstream users;
-    users.open(".\\" + DATA_PATH + "\\users", std::ios::out | std::ios::app);
+    users.open("./" + DATA_PATH + "/users", std::ios::out | std::ios::app);
     users << "test" << ' ' << "test" << '\n';
     users.close(); 
 
