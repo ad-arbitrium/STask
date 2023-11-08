@@ -9,7 +9,8 @@ src/STask/users/
 src/STask/build/
 
 CMakeFiles
-cmake_install.cmake
 CMakeCache.txt
-
+cmake_install.cmake
+*.a
 *.so
+Makefile
