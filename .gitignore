@@ -8,6 +8,11 @@ src/STask/users/
 
 src/STask/build/
 
+/data
+/users
+
+STaskTest
+
 CMakeFiles
 CMakeCache.txt
 cmake_install.cmake
