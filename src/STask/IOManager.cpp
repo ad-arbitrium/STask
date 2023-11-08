@@ -70,7 +70,7 @@ std::optional<Error> IOManager::writeTask(Task& task, const User& user)
         return std::make_optional(Error("Unable to open user file"));
 
     userFile << task.name << s_sep << task.description << s_sep << task.creationDate
-        << s_sep << task.deadlineDate << s_sep << task.endDate;
+        << s_sep << task.deadlineDate << s_sep << task.endDate << '\n';
     
     userFile.close();
 

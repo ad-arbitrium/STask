@@ -61,7 +61,8 @@ int main(int argc, char** argv)
 	STask::Task* tsk2 = res.first;
 	while (tsk2)
 	{
-		std::cout << tsk2->name;
+		
+		std::cout << tsk2->name << ' ' << tsk2 << '\n';
 		tsk2 = tsk2->next;
 	}
 
